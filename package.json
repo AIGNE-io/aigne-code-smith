@@ -1,6 +1,6 @@
 {
   "name": "@aigne/code-smith",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "PR Reviewer & Summarizer based on AIGNE Framework",
   "main": "lib/main.js",
