@@ -30,7 +30,8 @@ async function run(): Promise<void> {
     getInput('anthropic_concurrency_limit'),
     getInput('github_concurrency_limit'),
     getInput('anthropic_base_url'),
-    getInput('language')
+    getInput('language'),
+    getBooleanInput('suggest_pr_title')
   )
 
   // print options
@@ -38,7 +39,8 @@ async function run(): Promise<void> {
 
   const prompts: Prompts = new Prompts(
     getInput('summarize'),
-    getInput('summarize_release_notes')
+    getInput('summarize_release_notes'),
+    getInput('suggest_pr_title_prompt')
   )
 
   // Create two bots, one for summary and one for review

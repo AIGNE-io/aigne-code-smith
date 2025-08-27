@@ -1,0 +1,25 @@
+name: Test PR Title Suggestions
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  test-pr-title-suggestions:
+    runs-on: ubuntu-latest
+    name: Test PR Title Suggestion Feature
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Test PR Title Suggestions
+        uses: ./
+        with:
+          suggest_pr_title: true
+          disable_review: true
+          disable_release_notes: true
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          debug: true

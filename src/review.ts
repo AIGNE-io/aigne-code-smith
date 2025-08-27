@@ -14,6 +14,7 @@ import {
 import { Inputs } from './inputs'
 import { octokit } from './octokit'
 import { type Options } from './options'
+import { suggestPrTitle } from './pr-title-suggest'
 import { type Prompts } from './prompts'
 import { getTokenCount } from './tokenizer'
 
@@ -120,6 +121,9 @@ export const codeReview = async (
     base: context.payload.pull_request.base.sha,
     head: context.payload.pull_request.head.sha
   })
+
+  // Generate PR title suggestions if enabled
+  await suggestPrTitle(lightBot, options, prompts, targetBranchDiff)
 
   const incrementalFiles = incrementalDiff.data.files
   const targetBranchFiles = targetBranchDiff.data.files

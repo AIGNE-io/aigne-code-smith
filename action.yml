@@ -204,10 +204,22 @@ inputs:
         - Optimization
         - Best practices: DRY, SOLID, KISS
 
-      Do not comment on minor code style issues, missing
-      comments/documentation. Identify and resolve significant
-      concerns to improve overall code quality while deliberately
-      disregarding minor issues.
+      **CRITICAL REVIEW FOCUS**: Only post comments for CRITICAL issues that significantly impact code quality:
+        - Security vulnerabilities or potential exploits
+        - Logic errors that could cause bugs or incorrect behavior
+        - Performance issues that could impact system efficiency
+        - Error handling problems that could cause crashes or data loss
+        - **ALL language quality issues are considered CRITICAL**:
+          * Spelling errors in comments, strings, and documentation
+          * Grammar mistakes and awkward phrasing
+          * Unclear or confusing wording that may hinder understanding
+          * Variable/function names that could be more descriptive or follow better naming conventions
+          * Comment clarity and proper English usage
+
+      **STRICT FILTERING**: Do NOT comment on minor style preferences, formatting choices,
+      or subjective improvements unless they fall into the CRITICAL categories above.
+      Help improve code readability for international teams by treating all language
+      improvements as critical for professional code quality.
   summarize:
     required: false
     description: 'The prompt for final summarization response'
@@ -221,6 +233,17 @@ inputs:
 
       Avoid additional commentary as this summary will be added as a comment on the
       GitHub pull request. Use the titles "Walkthrough" and "Changes" and they must be H2.
+
+  suggest_pr_title_prompt:
+    required: false
+    description: 'The prompt for generating pull request title'
+    default: |
+      Based on the following git diff, please generate 3 conventional style pull request titles.
+
+      $diff
+
+      The titles should be concise and descriptive, and should follow the conventional commit format.
+      Please provide the titles as a numbered list.
 
   summarize_release_notes:
     required: false
@@ -241,6 +264,10 @@ inputs:
     required: false
     description: 'The icon for the bot'
     default: '<img src="https://avatars.githubusercontent.com/u/143965177?s=48&v=4" alt="Image description" width="15" height="15">'
+  suggest_pr_title:
+    required: false
+    description: 'Generate conventional style titles for the pull request.'
+    default: 'false'
 runs:
   using: 'node24'
   main: 'dist/index.js'

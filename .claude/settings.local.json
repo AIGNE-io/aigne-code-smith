@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run format:*)",
+      "Bash(npm run package:*)",
+      "Bash(cp:*)",
+      "Bash(npm ls:*)"
+    ],
+    "deny": [],
+    "defaultMode": "acceptEdits"
+  }
+}

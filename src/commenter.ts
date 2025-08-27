@@ -18,6 +18,9 @@ export const COMMENT_REPLY_TAG =
 export const SUMMARIZE_TAG =
   '<!-- This is an auto-generated comment: summarize by AIGNE CodeSmith -->'
 
+export const PR_TITLE_TAG =
+  '<!-- This is an auto-generated comment: pr title suggestion by AIGNE CodeSmith -->'
+
 export const IN_PROGRESS_START_TAG =
   '<!-- This is an auto-generated comment: summarize review in progress by AIGNE CodeSmith -->'
 

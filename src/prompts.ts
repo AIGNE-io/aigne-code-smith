@@ -3,6 +3,7 @@ import { type Inputs } from './inputs'
 export class Prompts {
   summarize: string
   summarizeReleaseNotes: string
+  suggestPrTitlePrompt: string
 
   summarizeFileDiff = `## GitHub PR Title
 
@@ -239,9 +240,14 @@ $comment
 \`\`\`
 `
 
-  constructor(summarize = '', summarizeReleaseNotes = '') {
+  constructor(
+    summarize = '',
+    summarizeReleaseNotes = '',
+    suggestPrTitlePrompt = ''
+  ) {
     this.summarize = summarize
     this.summarizeReleaseNotes = summarizeReleaseNotes
+    this.suggestPrTitlePrompt = suggestPrTitlePrompt
   }
 
   renderSummarizeFileDiff(
@@ -280,5 +286,9 @@ $comment
 
   renderReviewFileDiff(inputs: Inputs): string {
     return inputs.render(this.reviewFileDiff)
+  }
+
+  renderSuggestPrTitle(inputs: Inputs): string {
+    return inputs.render(this.suggestPrTitlePrompt)
   }
 }

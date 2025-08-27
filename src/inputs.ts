@@ -89,7 +89,7 @@ export class Inputs {
       content = content.replace('$patches', this.patches)
     }
     if (this.diff) {
-      content = content.replace('$diff', this.diff)
+      content = content.replace(/\$diff/g, this.diff)
     }
     if (this.commentChain) {
       content = content.replace('$comment_chain', this.commentChain)

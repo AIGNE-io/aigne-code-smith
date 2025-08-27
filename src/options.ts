@@ -22,6 +22,7 @@ export class Options {
   heavyTokenLimits: TokenLimits
   apiBaseUrl: string
   language: string
+  suggestPrTitle: boolean
 
   constructor(
     debug: boolean,
@@ -40,7 +41,8 @@ export class Options {
     anthropicConcurrencyLimit = '6',
     githubConcurrencyLimit = '6',
     apiBaseUrl = 'https://api.anthropic.com/v1',
-    language = 'en-US'
+    language = 'en-US',
+    suggestPrTitle = false
   ) {
     this.debug = debug
     this.disableReview = disableReview
@@ -61,6 +63,7 @@ export class Options {
     this.heavyTokenLimits = new TokenLimits(anthropicHeavyModel)
     this.apiBaseUrl = apiBaseUrl
     this.language = language
+    this.suggestPrTitle = suggestPrTitle
   }
 
   // print all options using core.info
@@ -84,6 +87,7 @@ export class Options {
     info(`review_token_limits: ${this.heavyTokenLimits.string()}`)
     info(`api_base_url: ${this.apiBaseUrl}`)
     info(`language: ${this.language}`)
+    info(`suggest_pr_title: ${this.suggestPrTitle}`)
   }
 
   checkPath(path: string): boolean {

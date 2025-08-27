@@ -72,12 +72,9 @@ IMPORTANT: Entire response must be in the language with ISO code: ${this.options
       const engine = new ExecutionEngine({ model: this.api })
 
       try {
-        const result = await pRetry(
-          () => engine.call(reviewAgent, message),
-          {
-            retries: this.options.anthropicRetries
-          }
-        )
+        const result = await pRetry(() => engine.call(reviewAgent, message), {
+          retries: this.options.anthropicRetries
+        })
         response = result.review as string
       } catch (e: unknown) {
         info(
