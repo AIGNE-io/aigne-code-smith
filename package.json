@@ -12,7 +12,13 @@
     "format-check": "prettier --check '**/*.ts'",
     "lint": "eslint src/**/*.ts",
     "test": "jest",
-    "all": "rm -f dist/*.js && npm run build && npm run format && npm run lint && npm run package && npm test"
+    "all": "rm -f dist/*.js && npm run build && npm run format && npm run lint && npm run package && npm test",
+    "release": "node scripts/release.js",
+    "release:patch": "npm run release patch",
+    "release:minor": "npm run release minor", 
+    "release:major": "npm run release major",
+    "release:test": "node scripts/test-release.js",
+    "prebuild": "mkdir -p dist"
   },
   "repository": {
     "type": "git",
