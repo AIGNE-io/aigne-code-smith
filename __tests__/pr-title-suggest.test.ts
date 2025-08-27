@@ -44,7 +44,9 @@ describe('suggestPrTitle', () => {
   }
 
   const mockPrompts = {
-    renderSuggestPrTitle: jest.fn().mockReturnValue('Generate PR titles for: $diff')
+    renderSuggestPrTitle: jest
+      .fn()
+      .mockReturnValue('Generate PR titles for: $diff')
   }
 
   const mockTargetBranchDiff = {
@@ -68,20 +70,30 @@ describe('suggestPrTitle', () => {
 
   it('should skip if feature is disabled', async () => {
     const options = { ...mockOptions, suggestPrTitle: false }
-    
-    await suggestPrTitle(mockBot as any, options as any, mockPrompts as any, mockTargetBranchDiff)
-    
+
+    await suggestPrTitle(
+      mockBot as any,
+      options as any,
+      mockPrompts as any,
+      mockTargetBranchDiff
+    )
+
     expect(mockBot.chat).not.toHaveBeenCalled()
   })
 
   it('should filter out dependency files when other files exist', async () => {
     mockBot.chat.mockResolvedValue(['feat: add hello world logging'])
-    
-    await suggestPrTitle(mockBot as any, mockOptions as any, mockPrompts as any, mockTargetBranchDiff)
-    
+
+    await suggestPrTitle(
+      mockBot as any,
+      mockOptions as any,
+      mockPrompts as any,
+      mockTargetBranchDiff
+    )
+
     expect(mockPrompts.renderSuggestPrTitle).toHaveBeenCalled()
     expect(mockBot.chat).toHaveBeenCalled()
-    
+
     const inputs = mockPrompts.renderSuggestPrTitle.mock.calls[0][0]
     expect(inputs.diff).toContain('src/test.js')
     expect(inputs.diff).not.toContain('package-lock.json')
@@ -98,20 +110,30 @@ describe('suggestPrTitle', () => {
         ]
       }
     }
-    
+
     mockBot.chat.mockResolvedValue(['chore: update dependencies'])
-    
-    await suggestPrTitle(mockBot as any, mockOptions as any, mockPrompts as any, diffWithOnlyDependencies)
-    
+
+    await suggestPrTitle(
+      mockBot as any,
+      mockOptions as any,
+      mockPrompts as any,
+      diffWithOnlyDependencies
+    )
+
     const inputs = mockPrompts.renderSuggestPrTitle.mock.calls[0][0]
     expect(inputs.diff).toContain('package-lock.json')
   })
 
   it('should handle empty response from bot gracefully', async () => {
     mockBot.chat.mockResolvedValue([''])
-    
-    await suggestPrTitle(mockBot as any, mockOptions as any, mockPrompts as any, mockTargetBranchDiff)
-    
+
+    await suggestPrTitle(
+      mockBot as any,
+      mockOptions as any,
+      mockPrompts as any,
+      mockTargetBranchDiff
+    )
+
     expect(mockBot.chat).toHaveBeenCalled()
     // Should not throw an error
   })
