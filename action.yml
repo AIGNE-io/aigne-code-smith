@@ -238,12 +238,15 @@ inputs:
     required: false
     description: 'The prompt for generating pull request title'
     default: |
-      Based on the following git diff, please generate 3 conventional style pull request titles.
+      Based on the following git diff, generate 3 conventional commit style pull request titles:
 
       $diff
 
-      The titles should be concise and descriptive, and should follow the conventional commit format.
-      Please provide the titles as a numbered list.
+      Requirements:
+      - Follow conventional commit format
+      - Be concise and descriptive
+      - Always use engligh for pull request titles
+      - Return only a numbered list of titles, nothing else
 
   summarize_release_notes:
     required: false

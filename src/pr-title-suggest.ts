@@ -101,14 +101,9 @@ export const suggestPrTitle = async (
     }
 
     // Format the comment with the suggestions
-    const suggestionComment = `### 🏷️ Pull Request Title Suggestions
+    const suggestionComment = `### Pull Request Title Suggestions
 
-Based on the changes in this PR, here are 3 conventional commit style title suggestions:
-
-${titleResponse}
-
----
-*Feel free to use one of these suggestions or modify them to better fit your changes.*`
+${titleResponse}`
 
     // Post the suggestion comment
     await commenter.comment(suggestionComment, PR_TITLE_TAG, 'replace')
