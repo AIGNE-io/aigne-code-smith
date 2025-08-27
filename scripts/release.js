@@ -234,8 +234,8 @@ function createGitHubRelease(version) {
   }
 }
 
-// Update major version tag
-function updateMajorTag(version) {
+// Update major version tag and latest tag
+function updateMajorAndLatestTags(version) {
   const majorVersion = `v${version.split('.')[0]}`;
   
   log(`Updating major version tag ${majorVersion}...`);
@@ -253,6 +253,23 @@ function updateMajorTag(version) {
   execCommand(`git push origin ${majorVersion} --force`);
   
   success(`Updated major version tag ${majorVersion}`);
+  
+  // Update latest tag
+  log('Updating latest tag...');
+  
+  // Delete existing latest tag locally and remotely
+  try {
+    execCommand('git tag -d latest', { silent: true, allowFail: true });
+  } catch {}
+  try {
+    execCommand('git push origin :refs/tags/latest', { silent: true, allowFail: true });
+  } catch {}
+  
+  // Create new latest tag
+  execCommand(`git tag -a latest -m "Latest release (v${version})"`);
+  execCommand('git push origin latest --force');
+  
+  success('Updated latest tag');
 }
 
 // Prompt user for confirmation
@@ -340,8 +357,8 @@ Examples:
     // Create GitHub release
     createGitHubRelease(newVersion);
     
-    // Update major version tag
-    updateMajorTag(newVersion);
+    // Update major version tag and latest tag
+    updateMajorAndLatestTags(newVersion);
     
     success('🎉 Release v' + newVersion + ' completed successfully!');
     
@@ -351,7 +368,10 @@ Examples:
     
     log('\nNext steps:');
     log(`  1. Verify the release at: https://github.com/${repoPath}/releases/tag/v${newVersion}`);
-    log(`  2. Test the action in a repository using: ${repoPath}@v${newVersion}`);
+    log(`  2. Test the action using any of these references:`);
+    log(`     - ${repoPath}@latest     # Always latest (good for testing)`);
+    log(`     - ${repoPath}@v${newVersion.split('.')[0]}        # Latest v${newVersion.split('.')[0]}.x.x (recommended for prod)`);
+    log(`     - ${repoPath}@v${newVersion}    # Specific version (most stable)`);
     log('  3. Update any documentation that references version numbers');
     
   } catch (err) {

@@ -174,8 +174,8 @@ create_github_release() {
     success "Created GitHub release $tag"
 }
 
-# Update major version tag (for GitHub Actions marketplace)
-update_major_tag() {
+# Update major version tag and latest tag (for GitHub Actions marketplace)
+update_major_and_latest_tags() {
     local version=$1
     local major_version="v$(echo "$version" | cut -d. -f1)"
     
@@ -190,6 +190,19 @@ update_major_tag() {
     git push origin "$major_version" --force
     
     success "Updated major version tag $major_version"
+    
+    # Update latest tag
+    log "Updating latest tag..."
+    
+    # Delete existing latest tag locally and remotely
+    git tag -d "latest" 2>/dev/null || true
+    git push origin ":refs/tags/latest" 2>/dev/null || true
+    
+    # Create new latest tag
+    git tag -a "latest" -m "Latest release (v$version)"
+    git push origin "latest" --force
+    
+    success "Updated latest tag"
 }
 
 # Main release function
@@ -251,14 +264,20 @@ Examples:
     # Create GitHub release
     create_github_release "$new_version"
     
-    # Update major version tag for marketplace
-    update_major_tag "$new_version"
+    # Update major version tag and latest tag for marketplace
+    update_major_and_latest_tags "$new_version"
     
     success "🎉 Release v$new_version completed successfully!"
     
+    local repo_path=$(git config --get remote.origin.url | sed 's/.*github.com[/:]\(.*\)\.git/\1/')
+    local major_version=$(echo "$new_version" | cut -d. -f1)
+    
     log "Next steps:"
-    log "  1. Verify the release at: https://github.com/$(git config --get remote.origin.url | sed 's/.*github.com[/:]\(.*\)\.git/\1/')/releases/tag/v$new_version"
-    log "  2. Test the action in a repository using: $(git config --get remote.origin.url | sed 's/.*github.com[/:]\(.*\)\.git/\1/')@v$new_version"
+    log "  1. Verify the release at: https://github.com/$repo_path/releases/tag/v$new_version"
+    log "  2. Test the action using any of these references:"
+    log "     - $repo_path@latest     # Always latest (good for testing)"
+    log "     - $repo_path@v$major_version        # Latest v$major_version.x.x (recommended for prod)"
+    log "     - $repo_path@v$new_version    # Specific version (most stable)"
     log "  3. Update any documentation that references version numbers"
 }
 

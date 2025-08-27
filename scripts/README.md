@@ -48,8 +48,9 @@ The release process creates:
 
 1. **Git Tag**: `v{version}` (e.g., `v0.2.0`)
 2. **Major Tag**: `v{major}` (e.g., `v0`) - for GitHub Actions marketplace
-3. **GitHub Release**: With auto-generated changelog
-4. **Updated Files**:
+3. **Latest Tag**: `latest` - always points to the most recent release
+4. **GitHub Release**: With auto-generated changelog
+5. **Updated Files**:
    - `package.json` - version bump
    - `dist/index.js` - bundled action code
    - `dist/` - all distribution files
@@ -208,12 +209,15 @@ gh repo view
 After release, the action can be used as:
 
 ```yaml
-- uses: aigne-io/aigne-codesmith@v1        # Latest v1.x.x
-- uses: aigne-io/aigne-codesmith@v1.2.0    # Specific version  
+- uses: aigne-io/aigne-codesmith@latest    # Always latest release (recommended for testing)
+- uses: aigne-io/aigne-codesmith@v1        # Latest v1.x.x (recommended for production)
+- uses: aigne-io/aigne-codesmith@v1.2.0    # Specific version (most stable)
 - uses: aigne-io/aigne-codesmith@v1.2      # Latest v1.2.x
 ```
 
-The major version tags (`v1`, `v2`, etc.) are automatically updated to point to the latest release in that major version.
+The release process automatically maintains:
+- **`latest`** tag - Always points to the most recent release across all versions
+- **Major version tags** (`v1`, `v2`, etc.) - Point to the latest release in that major version
 
 ## 🔒 Security
 
