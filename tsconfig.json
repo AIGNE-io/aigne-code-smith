@@ -15,5 +15,5 @@
     "noImplicitAny": true,
     "esModuleInterop": true
   },
-  "exclude": ["dist", "lib", "node_modules", "**/*.test.ts", "webpack.config.js", "*.config.js"]
+  "exclude": ["dist", "lib", "node_modules", "scripts", "**/*.test.ts", "webpack.config.js", "*.config.js"]
 }
