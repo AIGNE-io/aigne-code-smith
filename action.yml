@@ -245,7 +245,8 @@ inputs:
       Requirements:
       - Follow conventional commit format
       - Be concise and descriptive
-      - Always use engligh for pull request titles
+      - MUST use English language only for pull request titles
+      - Use proper English grammar and spelling
       - Return only a numbered list of titles, nothing else
 
   summarize_release_notes:
